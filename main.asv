@@ -41,11 +41,9 @@ D = zeros([3 4]);
 sys = ss(A, B, C, D);
 H = tf(sys);
 
-%% 2. Response of the system for a given input
+%% Response of the system for a given input
 
-% Create time axis
-t = 0:0.1:10;
-
+t = 0:0.1:10;   % Time axis
 % Create input
 u = [
      sin(3*t)
@@ -53,16 +51,13 @@ u = [
      t
      sqrt(t)
     ];
-
 % Response of the system
 y = lsim(sys,u,t);
 
-% Plot output
 plot_IO(t,u,y);
 
 %% 2. Determine the impulse response of the system
 
-impulse(sys)
 [y,t] = impulse(sys);
 
 %% 4. Stability
@@ -73,7 +68,7 @@ eigs = eig(A);
 %% 5. Controllability, Observability
 
 C6 = ctrb(sys);
-C6_rank = rank(C6);
+rank(C6);
 
 O6 = obsv(sys);
-O6_rank = rank(O6);
+rank(O6);
