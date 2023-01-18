@@ -62,6 +62,7 @@ plot_IO(t,u,y);
 
 %% 2. Determine the impulse response of the system
 
+figure(3)
 impulse(sys)
 [y,t] = impulse(sys);
 
@@ -77,3 +78,7 @@ C6_rank = rank(C6);
 
 O6 = obsv(sys);
 O6_rank = rank(O6);
+
+%% Discretization
+
+sysd = c2d(sys,1e-3);    % Sampling time = 1e-3 s => Sampling frequency = 1000 Hz
