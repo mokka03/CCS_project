@@ -150,14 +150,6 @@ Q = diag([500 350 350 0 20 20]);
 R = diag([0.01 0.01 0.01 0.01]);
 [K,S,P] = lqr(A,B,Q,R);
 sys_LQR = ss(A-B*K,B,C,D);
+
 step(sys_LQR)
-
-%%% Validation
-t = 0:3*60;
-u = ones(4,size(t,2));
-u(1,:) = 0;
-
-y = lsim(sys_LQR,u,t);
-lsim(sys_LQR,u,t);
-
 
