@@ -71,6 +71,11 @@ impulse(sys)
 stab = isstable(sys);
 eigs = eig(A);
 
+% Lyapunov equation: A*M + M*A' + N = 0
+N = diag([1 1 1 1 1 1]); % positive definite
+% M = lyap(A,N);
+
+
 %% 1.5 Controllability, Observability
 
 C6 = ctrb(sys);
