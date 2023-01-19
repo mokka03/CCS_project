@@ -95,9 +95,9 @@ D0 = [
       0 0 1
       0 0 0
      ];
-D = tunableGain('Decoupler',D0);
-D.InputName = 'e';
-D.OutputName = {'pVf','pVb','pVr','pVl'};
+Dec = tunableGain('Decoupler',D0);
+Dec.InputName = 'e';
+Dec.OutputName = {'pVf','pVb','pVr','pVl'};
 
 PID_Vf = tunablePID('PID_Vf','pid');
 PID_Vf.InputName = 'pVf';
@@ -117,15 +117,14 @@ PID_Vl.OutputName = 'qVl';
 
 sum1 = sumblk('e = r - y',3);
 
-C0 = connect(PID_Vf,PID_Vb,PID_Vr,PID_Vl,D,sum1,{'r','y'},{'qVf','qVb','qVr','qVl'});
+C0 = connect(PID_Vf,PID_Vb,PID_Vr,PID_Vl,Dec,sum1,{'r','y'},{'qVf','qVb','qVr','qVl'});
 
 wc = [0.1,10];
-[H,C,gam,Info] = looptune(H,C0,wc);
+[H,PID,gam,Info] = looptune(H,C0,wc);
 
-% showTunable(C)
+% showTunable(PID)
 
-T = connect(H,C,'r','y');
-step(T)
+T = connect(H,PID,'r','y');
 
 %%% Validation
 % % Constant
@@ -144,3 +143,21 @@ r(3,80:end) = ones(1,size(t,2)-79);
 y = lsim(T,r,t);
 
 plot_PID(t,r,y);
+
+%% 2.3  LQR control (continuous time)
+close all;
+Q = diag([500 350 350 0 20 20]);
+R = diag([0.01 0.01 0.01 0.01]);
+[K,S,P] = lqr(A,B,Q,R);
+sys_LQR = ss(A-B*K,B,C,D);
+step(sys_LQR)
+
+%%% Validation
+t = 0:3*60;
+u = ones(4,size(t,2));
+u(1,:) = 0;
+
+y = lsim(sys_LQR,u,t);
+lsim(sys_LQR,u,t);
+
+
