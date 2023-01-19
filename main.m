@@ -144,12 +144,25 @@ y = lsim(T,r,t);
 
 plot_PID(t,r,y);
 
-%% 2.3  LQR control (continuous time)
-close all;
+%% 2.3 LQR control (continuous time)
+
 Q = diag([500 350 350 0 20 20]);
 R = diag([0.01 0.01 0.01 0.01]);
 [K,S,P] = lqr(A,B,Q,R);
 sys_LQR = ss(A-B*K,B,C,D);
 
 step(sys_LQR)
+
+
+%% 2.4 LQR control (discrete time)
+
+Ad = sysd.A;
+Bd = sysd.B;
+Cd = sysd.C;
+Dd = sysd.D;
+[Kd,Sd,Pd] = lqr(Ad,Bd,Q,R);
+sys_LQRd = ss(Ad-Bd*Kd,Bd,Cd,Dd);
+
+step(sys_LQRd)
+
 
