@@ -133,17 +133,17 @@ T = connect(H,PID,'r','y');
 
 %%% Validation
 % % Constant
-t = 0:3*60;
-r = zeros([3 size(t,2)]);
-r(1,:) = ones(1,size(t,2));
-r(2,50:end) = ones(1,size(t,2)-49);
-r(3,80:end) = ones(1,size(t,2)-79);
+% t = 0:3*60;
+% r = zeros([3 size(t,2)]);
+% r(1,:) = ones(1,size(t,2));
+% r(2,50:end) = ones(1,size(t,2)-49);
+% r(3,80:end) = ones(1,size(t,2)-79);
 
 % % Sinusoidal
-% t = 0:40*60;
-% r = ones([3 size(t,2)]);
-% r(1,:) = sin(t*1e-3);
-% r(2,:) = cos(t*1e-2);
+t = 0:40*60;
+r = ones([3 size(t,2)]);
+r(1,:) = sin(t*1e-3);
+r(2,:) = cos(t*1e-2);
 
 y = lsim(T,r,t);
 
