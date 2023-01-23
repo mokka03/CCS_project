@@ -9,7 +9,7 @@ J_p = 0.0552;   % Equivalent moment of inertia about pitch axis (kg*m^2)
 J_r = 0.0552;   % Equivalent moment of inertia about roll axis (kg*m^2)
 
 
-%% State-Space Model
+%% 1.1 State-Space Model
 A = [
      0 0 0 1 0 0
      0 0 0 0 1 0
@@ -36,12 +36,18 @@ C = [
 
 D = zeros([3 4]);
 
-%% 1.1 Determine the transfer function of the system
+%% 1.2  Input-output model: transfer function, impulse response function
 
+% Transfer function
 sys = ss(A, B, C, D);
 H = tf(sys);
 
-%% 1.2 Response of the system for a given input
+% Impulse response function
+figure(3)
+impulse(sys)
+[y,t] = impulse(sys);
+
+%% 1.3 Response of the system for a given input
 
 % Create time axis
 t = 0:0.1:10;
@@ -60,11 +66,6 @@ y = lsim(sys,u,t);
 % Plot output
 plot_IO(t,u,y);
 
-%% 1.3 Determine the impulse response of the system
-
-figure(3)
-impulse(sys)
-[y,t] = impulse(sys);
 
 %% 1.4 Stability
 
