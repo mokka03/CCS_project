@@ -43,7 +43,7 @@ sys = ss(A, B, C, D);
 H = tf(sys);
 
 % Impulse response function
-figure(3)
+figure(1)
 impulse(sys)
 [y,t] = impulse(sys);
 
@@ -92,7 +92,7 @@ O6_rank = rank(O6);
 sysd = c2d(sys,1e-3);    % Sampling time = 1e-3 s => Sampling frequency = 1000 Hz
 
 %% 2.1 PID
-close all;
+
 H = tf(sys);
 H.InputName = {'qVf','qVb','qVr','qVl'};
 H.OutputName = 'y';
@@ -159,6 +159,7 @@ R = diag([0.01 0.01 0.01 0.01]);
 [K,S,P] = lqr(A,B,Q,R);
 sys_LQR = ss(A-B*K,B,C,D);
 
+figure(5)
 step(sys_LQR)
 
 
@@ -171,6 +172,7 @@ Dd = sysd.D;
 [Kd,Sd,Pd] = lqr(Ad,Bd,Q,R);
 sys_LQRd = ss(Ad-Bd*Kd,Bd,Cd,Dd);
 
+figure(6)
 step(sys_LQRd)
 
 

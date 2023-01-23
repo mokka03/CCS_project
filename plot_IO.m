@@ -5,7 +5,7 @@ function [] = plot_IO(t,u,y)
 %   y - output
 
     %% Plot input
-    f1 = figure(1);
+    f1 = figure(2);
     f1.Position = [0 100 700 500]; 
     subplot(4,1,1)
     plot(t,u(1,:))
@@ -32,7 +32,7 @@ function [] = plot_IO(t,u,y)
     set(gca,'FontSize',11);
 
     %% Plot output
-    f2 = figure(2);
+    f2 = figure(3);
     f2.Position = [580 100 700 500]; 
     subplot(3,1,1)
     plot(t,y(:,1))
